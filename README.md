@@ -1,104 +1,20 @@
-### Links for reading on React subjects:
-[why super Props?](https://overreacted.io/why-do-we-write-super-props/)
+Behavior: When a user navigates to the ticket detail page, they should be able to click an edit button that takes them to an edit form.
+Implementation:
 
-[Thinking in React](https://reactjs.org/docs/thinking-in-react.html)
+We will need to add a slice of state to TicketControl to determine whether the EditTicketForm is showing or not. The default state will be editing: false.
+We will need to add a method to TicketControl that will set editing to true. We will call this method handleEditClick.
+Next, we will need to pass down handleEditClick to the TicketDetail component (and add a PropType).
+Then we will add a button to TicketDetail that triggers the handleEditClick method. When the button is clicked, editing will be set to true.
+We also have to add a conditional to render the EditTicketForm. We will need to pass the ticket to be edited as a prop down to EditTicketForm. Since we will already have a selectedTicket set to an actual ticket, we can just pass the selectedTicket as a prop.
+Finally, we need to create our EditTicketForm. It will use the ReusableForm component we made in the last lesson.
 
-[Diagrams](https://app.diagrams.net/)
+Behavior: When a user fills out the edit form and clicks the edit button, the specified ticket should be edited in the queue.
+Implementation:
 
-[prop-types](https://github.com/facebook/prop-types)
-
-[Reconciliation](https://reactjs.org/docs/reconciliation.html#recursing-on-children)
-
-[React dev tool](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
-
-[Reac dev tool turtorial](https://react-devtools-tutorial.now.sh/)
-
-[using the public folder](https://create-react-app.dev/docs/using-the-public-folder/)
-
-
-
-
-
-
-
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-
-
-
-
-
-
-
-
-
-
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+We will need to add a method to TicketControl that will update a ticket. We will do so in TicketControl because that is where our state currently resides. We will call this method handleEditingTicketInList.
+handleEditingTicketInList will update the state in the masterTicketList to reflect the edited ticket.
+handleEditingTicketInList will also need to update selectedTicket to false because the ticket will be deleted - and we don't want the TicketDetail component showing.
+handleEditingTicketInList also has to update editing to false so the EditTicketComponent doesn't show.
+We will need to pass handleEditingTicketInList to our new EditTicketForm as a prop.
+Next, we will need to add a button to EditTicketForm that will trigger a handleEditTicketFormSubmission function when clicked.
+Finally, we will add a function called handleEditTicketFormSubmission which will capture values from the edit form and then trigger the handleEditingTicketInList method in the TicketControl component.
