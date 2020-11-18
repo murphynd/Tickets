@@ -1,3 +1,26 @@
+### Links for reading on React subjects:
+[why super Props?](https://overreacted.io/why-do-we-write-super-props/)
+
+[Thinking in React](https://reactjs.org/docs/thinking-in-react.html)
+
+[Diagrams](https://app.diagrams.net/)
+
+[prop-types](https://github.com/facebook/prop-types)
+
+[Reconciliation](https://reactjs.org/docs/reconciliation.html#recursing-on-children)
+
+[React dev tool](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
+
+[Reac dev tool turtorial](https://react-devtools-tutorial.now.sh/)
+
+[using the public folder](https://create-react-app.dev/docs/using-the-public-folder/)
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -13,6 +36,17 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
+
+
+
+
+
+
+
+
+
+
+
 
 ### `npm test`
 
