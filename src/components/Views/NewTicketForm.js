@@ -4,12 +4,6 @@ import PropTypes from "prop-types";
 import ReusableForm from "../ReusableCode/ReusableForm";
 
 function NewTicketForm(props) {
-  function handleNewTicketFormSubmission(event) {
-    event.preventDefault();
-    console.log(event.target.names.value);
-    console.log(event.target.location.value);
-    console.log(event.target.issue.value);
-  }
   return (
     <React.Fragment>
       <ReusableForm

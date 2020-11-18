@@ -2,6 +2,7 @@ import React from 'react';
 import NewTicketForm from '../Views/NewTicketForm';
 import TicketList from '../Views/TicketList';
 import TicketDetail from '../Views/TicketDetail';
+import EditTicketForm from '../Views/EditTicketForm';
 
 class TicketControl extends React.Component {
 
@@ -10,10 +11,24 @@ class TicketControl extends React.Component {
     this.state = {
       formVisibleOnPage: false,
       masterTicketList: [],
-      selectedTicket: null
+      selectedTicket: null,
+      editing: false
     };
   }
   //methods
+  handleEditClick = () => {
+    this.setState({ editing: true });
+  }
+  handleEditingTicketInList = (ticketToEdit) => {
+    const editedMasterTicketList = this.state.masterTicketList
+      .filter(ticket => ticket.id !== this.state.selectedTicket.id)
+      .concat(ticketToEdit);
+    this.setState({
+      masterTicketList: editedMasterTicketList,
+      editing: false,
+      selectedTicket: null
+    });
+  }
   handleDeletingTicket = (id) => {
     const newMasterTicketList = this.state.masterTicketList.filter(ticket => ticket.id !== id);
     this.setState({
@@ -25,23 +40,13 @@ class TicketControl extends React.Component {
     const selectedTicket = this.state.masterTicketList.filter(ticket => ticket.id === id)[0];
     this.setState({ selectedTicket: selectedTicket });
   }
+
   handleClick = () => {
     if (this.state.selectedTicket != null) {
       this.setState({
         formVisibleOnPage: false,
-        selectedTicket: null
-      });
-    } else {
-      this.setState(prevState => ({
-        formVisibleOnPage: !prevState.formVisibleOnPage,
-      }));
-    }
-  }
-  handleClick = () => {
-    if (this.state.selectedTicket != null) {
-      this.setState({
-        formVisibleOnPage: false,
-        selectedTicket: null
+        selectedTicket: null,
+        editing: false
       });
     } else {
       this.setState(prevState => ({
@@ -56,28 +61,38 @@ class TicketControl extends React.Component {
       formVisibleOnPage: false
     });
   }
-  handleChangingSelectedTicket = (id) => {
-    const selectedTicket = this.state.masterTicketList.filter(ticket => ticket.id === id)[0];
-    this.setState({ selectedTicket: selectedTicket });
-  }
 
   // class component The code we put inside the render() method determines the content that will be rendered for the user.
   // /CONDITIONAL RENDERING
   render() {
     let currentlyVisibleState = null;
     let buttonText = null;
-
-    if (this.state.selectedTicket != null) {
-      currentlyVisibleState = <TicketDetail ticket={this.state.selectedTicket} onClickingDelete={this.handleDeletingTicket} />
+    if (this.state.editing) {
+      currentlyVisibleState =
+        <EditTicketForm
+          ticket={this.state.selectedTicket}
+          onEditTicket={this.handleEditingTicketInList} />
+      buttonText = "Return to Ticket List";
+    } else if (this.state.selectedTicket != null) {
+      currentlyVisibleState =
+        <TicketDetail
+          ticket={this.state.selectedTicket}
+          onClickingDelete={this.handleDeletingTicket}
+          onClickingEdit={this.handleEditClick} />
       buttonText = "Return to Ticket List";
       // While our TicketDetail component only takes placeholder data, we will eventually be passing the value of selectedTicket as a prop.
     }
     else if (this.state.formVisibleOnPage) {
       // This conditional needs to be updated to "else if."
-      currentlyVisibleState = <NewTicketForm onNewTicketCreation={this.handleAddingNewTicketToList} />;
+      currentlyVisibleState =
+        <NewTicketForm
+          onNewTicketCreation={this.handleAddingNewTicketToList} />;
       buttonText = "Return to Ticket List";
     } else {
-      currentlyVisibleState = <TicketList ticketList={this.state.masterTicketList} onTicketSelection={this.handleChangingSelectedTicket} />;
+      currentlyVisibleState =
+        <TicketList
+          ticketList={this.state.masterTicketList}
+          onTicketSelection={this.handleChangingSelectedTicket} />;
       // Because a user will actually be clicking on the ticket in the Ticket component, we will need to pass our new handleChangingSelectedTicket method as a prop.
       buttonText = "Add Ticket";
     }
